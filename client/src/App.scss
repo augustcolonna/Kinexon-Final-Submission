@@ -15,7 +15,6 @@ html,
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   height: 100%;
 
   .position-container {
@@ -57,6 +56,15 @@ html,
           margin-top: 0;
         }
 
+        .timestamp {
+          width: 90%;
+          text-align: center;
+          font-size: 1.5rem;
+          border: solid 1px $white-color;
+          border-radius: 15px;
+          padding: 5px;
+        }
+
         .location {
           display: flex;
           flex-direction: column;
@@ -85,14 +93,6 @@ html,
             font-weight: bold;
           }
         }
-
-        .timestamp {
-          width: 90%;
-          text-align: center;
-          font-size: 1.5rem;
-          border: solid 1px $white-color;
-          border-radius: 15px;
-        }
       }
     }
   }
@@ -104,6 +104,7 @@ html,
   justify-content: center;
   align-items: center;
   height: 100%;
+  width: 100%;
   background-image: -webkit-linear-gradient(
     30deg,
     #004e95 25%,
@@ -123,22 +124,54 @@ html,
     border: solid 3px $white-color;
     border-radius: 15px;
     padding: 10px;
-    width: 60%;
+
     background-color: rgba($color: $white-color, $alpha: 0.1);
 
     h1 {
       color: #eeeded;
       font-size: 4rem;
       text-align: center;
+      margin-bottom: 5px;
     }
 
-    p {
-      width: 90%;
-      line-height: 2.4rem;
-      letter-spacing: 0.1rem;
+    h2 {
+      color: #eeeded;
+      font-size: 3rem;
+      text-align: center;
+      margin: 0;
+      margin-bottom: 5px;
+    }
+
+    ol {
       color: #eeeded;
       font-size: 2rem;
       text-align: center;
+      margin: 0;
+      padding: 0;
+      width: 90%;
+      list-style-position: inside;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: first baseline;
+
+      li {
+        margin: 5px;
+
+        span {
+          font-weight: bold;
+          font-style: italic;
+        }
+      }
+    }
+    p {
+      color: #eeeded;
+      font-size: 1.2rem;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      width: 90%;
+      font-style: italic;
     }
   }
 

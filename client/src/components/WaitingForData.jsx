@@ -5,17 +5,26 @@ function WaitingForData() {
     <div className="waiting-container">
       <img src={Logo} alt="logo" />
       <div className="challenge-info">
-        <h1>Coding Challenge Requirements</h1>
+        <h1>Kinexon Coding Challenge</h1>
+        <h2>Instructions</h2>
+        <ol>
+          <li>
+            cd into the client folder, run{" "}
+            <span>npm i (install), and then npm run dev</span> to start the
+            client
+          </li>
+          <li>
+            From the client folder, run{" "}
+            <span>node src/utilities/subscriber.js</span>
+          </li>
+          <li>
+            In a split terminal, cd into the server folder and run{" "}
+            <span>npm i, and then node publisher</span>{" "}
+          </li>
+        </ol>
         <p>
-          The position generator is responsible for generating more or less
-          random position data. A position data message consists of a timestamp,
-          a sensor id and x/y/z coordinates. This is reflected in the Protobuf
-          definitions above. Positions shall be generated for 10 sensors with
-          1Hz and resemble player movement on a playing field. That means that
-          individual positions should not exceed possible velocities of a human
-          player and remain between 0m and 100m for x and y. After a position
-          has been generated, noise of +/ - 30cm shall be added before the data
-          leaves the position generator.
+          The program will automatically change the UI based off the contents of
+          the JSON file
         </p>
       </div>
     </div>
