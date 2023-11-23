@@ -1,5 +1,5 @@
-function PositionThree({ positionData }) {
-  const firstPosition = positionData.positions["3"];
+function PositionInformation({ positionData, positionNumber }) {
+  const firstPosition = positionData.positions[positionNumber];
 
   const lastElement = firstPosition[firstPosition.length - 1];
   const timestamp = parseInt(lastElement.timestamp) / 1000;
@@ -14,20 +14,26 @@ function PositionThree({ positionData }) {
 
   return (
     <div className="single-position">
-      <h3>Sensor Id {lastElement.sensorId}</h3>
-      <p className="location">
-        <span> {`X: ${lastElement.data3d.x}`}</span>
-        <br></br>
-        <span> {`Y: ${lastElement.data3d.y}`}</span>
-        <br></br>
-        <span> {`Z: ${lastElement.data3d.z.toFixed(2)}`}</span>
-      </p>
+      <h3>Player Number {lastElement.sensorId}</h3>
+      <div className="location">
+        <h4>Coordinates</h4>
+        <p>
+          <span>X</span> {lastElement.data3d.x}
+        </p>
+        <p>
+          <span>Y</span> {lastElement.data3d.y}
+        </p>
+        <p>
+          <span>Z</span> {lastElement.data3d.z.toFixed(2)}
+        </p>
+      </div>
+
       <p className="timestamp">
-        {`Player ${lastElement.sensorId} was at this location at:
+        {`Location at:
         ${timestampDate}`}
       </p>
     </div>
   );
 }
 
-export default PositionThree;
+export default PositionInformation;

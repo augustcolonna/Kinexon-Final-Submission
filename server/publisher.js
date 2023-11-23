@@ -4,7 +4,7 @@ import pkg from "protobufjs";
 
 //protobuf import
 const { loadSync } = pkg;
-const root = loadSync("src/proto/messages.proto");
+const root = loadSync("proto/messages.proto");
 const Data3d = root.lookupType("player.positions.Data3d");
 const Position = root.lookupType("player.positions.Position");
 
