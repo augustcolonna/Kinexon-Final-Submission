@@ -1,0 +1,15 @@
+syntax = "proto3";
+package player.positions;
+///Users/augustcolonna/Downloads/protoc-3.15.8-osx-x86_64/bin/protoc --js_out=import_style=commonjs,binary:. proto/messages.proto
+
+message Data3d {
+    float x = 1;
+    float y = 2;
+    float z = 3;
+    }
+
+    message Position {
+    string sensorId = 1;
+    string timestampUsec = 2;
+    Data3d data3d = 3;
+    }
