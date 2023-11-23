@@ -16,6 +16,7 @@ import PositionSeven from "./components/PositionSeven";
 import PositionEight from "./components/PositionEight";
 import PositionNine from "./components/PositionNine";
 import PositionTen from "./components/PositionTen";
+import WaitingForData from "./components/WaitingForData";
 
 function App() {
   const [positions, setPositions] = useState(false);
@@ -69,9 +70,7 @@ function App() {
           </div>
         </div>
       ) : (
-        <div>
-          <p>Waiting for Player movemenet</p>
-        </div>
+        <WaitingForData />
       )}
     </div>
   );
