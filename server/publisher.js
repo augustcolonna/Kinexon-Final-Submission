@@ -17,40 +17,68 @@ publisher.bindSync(port);
 console.log(`Publisher bound to ${port}`);
 
 // Function to generate a random position
-function generateRandomPosition() {
+function generatePosition() {
   return Data3d.create({
     x: Math.abs(Math.floor(Math.random() * 101)),
     y: Math.abs(Math.floor(Math.random() * 101)),
-    z: Math.abs(Math.floor(Math.random() * 3)),
+    z: 0,
+  });
+}
+
+function generateMovement(coordinates) {
+  let playerMovement = Math.floor(Math.random() * 6);
+
+  if (coordinates.x === 0) {
+    coordinates.x += playerMovement;
+  }
+  if (coordinates.y === 0) {
+    coordinates.y += playerMovement;
+  }
+  if (coordinates.x === 100) {
+    coordinates.x -= playerMovement;
+  }
+  if (coordinates.y === 100) {
+    coordinates.y -= playerMovement;
+  } else {
+    coordinates.x += Math.floor(Math.random() * 11) - 5;
+    coordinates.y += Math.floor(Math.random() * 11) - 5;
+  }
+
+  return Data3d.create({
+    x: coordinates.x,
+    y: coordinates.y,
+    z: coordinates.z,
   });
 }
 
 // Function to add noise to the position
 function addNoise(coordinates) {
   return Data3d.create({
-    x: coordinates.x + Math.floor((Math.random() - 0.5) * 0.6),
-    y: coordinates.y + Math.floor((Math.random() - 0.5) * 0.6),
+    x: coordinates.x + Math.abs(Math.floor(Math.random() - 0.5) * 0.6),
+    y: coordinates.y + Math.abs(Math.floor(Math.random() - 0.5) * 0.6),
     z: coordinates.z + Math.abs(Math.floor(Math.random() - 0.5) * 0.6),
   });
 }
 
 // Function to publish updates
 function publishUpdates() {
+  const generateInitialPosition = generatePosition();
+
   setInterval(() => {
     for (let i = 1; i <= 10; i++) {
       const timestamp = new Date();
       const timestamp_usec = timestamp.getTime() * 1000;
 
-      console.log(timestamp_usec);
+      const movement = generateMovement(generateInitialPosition);
 
-      const position = generateRandomPosition();
-      const positionWithNoise = addNoise(position);
+      const positionWithNoise = addNoise(movement);
 
       const positionData = {
         sensorId: i.toString(),
         timestampUsec: timestamp_usec.toString(),
         data3d: positionWithNoise,
       };
+
       console.log(positionData);
       const message = Position.create(positionData);
 
