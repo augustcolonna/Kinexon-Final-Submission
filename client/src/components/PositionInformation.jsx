@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function PositionInformation({ positionData, positionNumber }) {
   const firstPosition = positionData.positions[positionNumber];
 
@@ -27,11 +29,11 @@ function PositionInformation({ positionData, positionNumber }) {
           <span>Z</span> {lastElement.data3d.z.toFixed(2)}
         </p>
       </div>
-
       <p className="timestamp">
         {`Location at:
         ${timestampDate}`}
       </p>
+      <Link to={`/${positionNumber}`}>View History</Link>
     </div>
   );
 }
