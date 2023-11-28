@@ -9,7 +9,7 @@ function PositionHistory({ positionData }) {
   return (
     <div className="position-history-container">
       <h3>Player number {id}</h3>
-      <Link to="/">
+      <Link to="/positions">
         <button>Back to All Positions</button>
       </Link>
       {position.map((position, index) => {

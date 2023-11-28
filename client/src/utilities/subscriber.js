@@ -16,7 +16,7 @@ const subscriber = socket("sub");
 // Connect the socket to the publisher's port
 const port = "tcp://127.0.0.1:3001";
 subscriber.connect(port);
-subscriber.subscribe("");
+subscriber.subscribe("positions");
 
 const Queue = new FileQueue();
 
@@ -26,6 +26,7 @@ subscriber.on("message", (topic, message) => {
   try {
     const positionMessage = Position.decode(message);
     Queue.enqueue(positionMessage);
+    console.log("connected");
   } catch (error) {
     console.error("Error decoding message:", error);
   }

@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
 
 function PositionInformation({ positionData, positionNumber }) {
   const firstPosition = positionData.positions[positionNumber];
 
   const lastElement = firstPosition[firstPosition.length - 1];
+
+  //fomratting timestamp
   const timestamp = parseInt(lastElement.timestamp) / 1000;
   const date = new Date(timestamp);
   const dateHours = date.getHours();
@@ -13,6 +17,12 @@ function PositionInformation({ positionData, positionNumber }) {
   const dateDay = date.getDate();
 
   const timestampDate = `${dateMonth}/${dateDay} at ${dateHours}:${dateMinutes}:${dateSeconds}`;
+
+  useEffect(() => {
+    axios.get("http://localhost:3000/positions").then((response) => {
+      console.log(response);
+    });
+  }, []);
 
   return (
     <div className="single-position">
@@ -33,7 +43,7 @@ function PositionInformation({ positionData, positionNumber }) {
         {`Location at:
         ${timestampDate}`}
       </p>
-      <Link to={`/${positionNumber}`}>View History</Link>
+      <Link to={`/positions/${positionNumber}`}>View History</Link>
     </div>
   );
 }

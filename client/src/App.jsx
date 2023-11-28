@@ -25,88 +25,85 @@ function App() {
 
   return (
     <div className="main-container">
-      {positions ? (
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <div className="position-container">
-                <div className="position">
-                  <PositionInformation
-                    positionNumber={1}
-                    positionData={positionData}
-                  />
-                </div>
-                <div className="position">
-                  <PositionInformation
-                    positionNumber={2}
-                    positionData={positionData}
-                  />
-                </div>
-                <div className="position">
-                  <PositionInformation
-                    positionNumber={3}
-                    positionData={positionData}
-                  />
-                </div>
-                <div className="position">
-                  <PositionInformation
-                    positionNumber={4}
-                    positionData={positionData}
-                  />
-                </div>
-                <div className="position">
-                  {" "}
-                  <PositionInformation
-                    positionNumber={5}
-                    positionData={positionData}
-                  />
-                </div>
-                <div className="position">
-                  {" "}
-                  <PositionInformation
-                    positionNumber={6}
-                    positionData={positionData}
-                  />
-                </div>
-                <div className="position">
-                  {" "}
-                  <PositionInformation
-                    positionNumber={7}
-                    positionData={positionData}
-                  />
-                </div>
-                <div className="position">
-                  {" "}
-                  <PositionInformation
-                    positionNumber={8}
-                    positionData={positionData}
-                  />
-                </div>
-                <div className="position">
-                  {" "}
-                  <PositionInformation
-                    positionNumber={9}
-                    positionData={positionData}
-                  />
-                </div>
-                <div className="position">
-                  <PositionInformation
-                    positionNumber={10}
-                    positionData={positionData}
-                  />
-                </div>
+      <Routes>
+        <Route path="/" element={<WaitingForData />} />
+        <Route
+          path="/positions"
+          element={
+            <div className="position-container">
+              <div className="position">
+                <PositionInformation
+                  positionNumber={1}
+                  positionData={positionData}
+                />
               </div>
-            }
-          />
-          <Route
-            path="/:id"
-            element={<PositionHistory positionData={positionData} />}
-          />
-        </Routes>
-      ) : (
-        <WaitingForData />
-      )}
+              <div className="position">
+                <PositionInformation
+                  positionNumber={2}
+                  positionData={positionData}
+                />
+              </div>
+              <div className="position">
+                <PositionInformation
+                  positionNumber={3}
+                  positionData={positionData}
+                />
+              </div>
+              <div className="position">
+                <PositionInformation
+                  positionNumber={4}
+                  positionData={positionData}
+                />
+              </div>
+              <div className="position">
+                {" "}
+                <PositionInformation
+                  positionNumber={5}
+                  positionData={positionData}
+                />
+              </div>
+              <div className="position">
+                {" "}
+                <PositionInformation
+                  positionNumber={6}
+                  positionData={positionData}
+                />
+              </div>
+              <div className="position">
+                {" "}
+                <PositionInformation
+                  positionNumber={7}
+                  positionData={positionData}
+                />
+              </div>
+              <div className="position">
+                {" "}
+                <PositionInformation
+                  positionNumber={8}
+                  positionData={positionData}
+                />
+              </div>
+              <div className="position">
+                {" "}
+                <PositionInformation
+                  positionNumber={9}
+                  positionData={positionData}
+                />
+              </div>
+              <div className="position">
+                <PositionInformation
+                  positionNumber={10}
+                  positionData={positionData}
+                />
+              </div>
+            </div>
+          }
+        />
+        <Route
+          path="/positions/:id"
+          element={<PositionHistory positionData={positionData} />}
+        />
+      </Routes>
     </div>
   );
 }
