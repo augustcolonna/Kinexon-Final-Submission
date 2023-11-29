@@ -1,27 +1,23 @@
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.scss";
 
-// import startSubscriber from "./utilities/subscriber";
 // import publishUpdates from "./utilities/subscriber";
 
-import positionData from "./utilities/positionData.json";
-
 import PositionInformation from "./components/PositionInformation";
-
 import WaitingForData from "./components/WaitingForData";
 import PositionHistory from "./components/PositionHistory";
 
 function App() {
-  const [positions, setPositions] = useState(false);
+  // const [positions, setPositions] = useState(false);
 
-  useEffect(() => {
-    if (Object.keys(positionData).length > 0) {
-      setPositions(true);
-    } else {
-      setPositions(false);
-    }
-  }, [positions]);
+  // useEffect(() => {
+  //   if (Object.keys(positionData).length > 0) {
+  //     setPositions(true);
+  //   } else {
+  //     setPositions(false);
+  //   }
+  // }, [positions]);
 
   return (
     <div className="main-container">
@@ -32,77 +28,44 @@ function App() {
           element={
             <div className="position-container">
               <div className="position">
-                <PositionInformation
-                  positionNumber={1}
-                  positionData={positionData}
-                />
+                <PositionInformation positionNumber={1} />
               </div>
               <div className="position">
-                <PositionInformation
-                  positionNumber={2}
-                  positionData={positionData}
-                />
+                <PositionInformation positionNumber={2} />
               </div>
               <div className="position">
-                <PositionInformation
-                  positionNumber={3}
-                  positionData={positionData}
-                />
+                <PositionInformation positionNumber={3} />
               </div>
               <div className="position">
-                <PositionInformation
-                  positionNumber={4}
-                  positionData={positionData}
-                />
+                <PositionInformation positionNumber={4} />
               </div>
               <div className="position">
                 {" "}
-                <PositionInformation
-                  positionNumber={5}
-                  positionData={positionData}
-                />
+                <PositionInformation positionNumber={5} />
               </div>
               <div className="position">
                 {" "}
-                <PositionInformation
-                  positionNumber={6}
-                  positionData={positionData}
-                />
+                <PositionInformation positionNumber={6} />
               </div>
               <div className="position">
                 {" "}
-                <PositionInformation
-                  positionNumber={7}
-                  positionData={positionData}
-                />
+                <PositionInformation positionNumber={7} />
               </div>
               <div className="position">
                 {" "}
-                <PositionInformation
-                  positionNumber={8}
-                  positionData={positionData}
-                />
+                <PositionInformation positionNumber={8} />
               </div>
               <div className="position">
                 {" "}
-                <PositionInformation
-                  positionNumber={9}
-                  positionData={positionData}
-                />
+                <PositionInformation positionNumber={9} />
               </div>
               <div className="position">
-                <PositionInformation
-                  positionNumber={10}
-                  positionData={positionData}
-                />
+                <PositionInformation positionNumber={10} />
               </div>
             </div>
           }
         />
-        <Route
-          path="/positions/:id"
-          element={<PositionHistory positionData={positionData} />}
-        />
+        <Route path="/positions/:id" element={<PositionHistory />} />
       </Routes>
     </div>
   );
