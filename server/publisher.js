@@ -1,14 +1,16 @@
 // Import necessary libraries
 import { socket } from "zeromq";
 import pkg from "protobufjs";
-import express from "express";
 import cors from "cors";
-import * as http from "http";
-import WebSocket from "ws";
+import express from "express";
+import { v4 as uuidv4 } from "uuid";
 
 const app = express();
-app.use(cors());
 const expressPort = 3000;
+app.use(cors());
+
+// //import utilities
+// import FileQueue from "./utilities/fileQueue.js";
 
 //protobuf import
 const { loadSync } = pkg;
@@ -16,17 +18,19 @@ const root = loadSync("proto/messages.proto");
 const Data3d = root.lookupType("player.positions.Data3d");
 const Position = root.lookupType("player.positions.Position");
 
-//instantiating websocket server
-const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
-
 // Create a ZeroMQ publisher socket
 const publisher = socket("pub");
+// Create a ZeroMQ subscriber socket
+const subscriber = socket("sub");
 
 // Bind the socket to a port
 const port = "tcp://127.0.0.1:3001";
 publisher.bindSync(port);
 console.log(`Publisher bound to ${port}`);
+subscriber.connect(port);
+subscriber.subscribe("");
+
+// const Queue = new FileQueue();
 
 // Function to generate a random position, used for initial position
 function generatePosition() {
@@ -62,16 +66,17 @@ function generateMovement() {
 
   //update z coordinate
   if (initialPosition.z === 0 || initialPosition.z < 0) {
-    initialPosition.y += playerMovementZ;
+    initialPosition.z += playerMovementZ;
   } else if (initialPosition.z === 3 || initialPosition.z > 3) {
-    initialPosition.y -= playerMovementZ;
+    initialPosition.z -= playerMovementZ;
   } else {
-    initialPosition.y += Math.floor(Math.random() * 11) - 5;
+    initialPosition.z += playerMovementZ;
   }
 
   // check if coordinates are in the court range
   initialPosition.x = Math.max(0, Math.min(100, initialPosition.x));
   initialPosition.y = Math.max(0, Math.min(100, initialPosition.y));
+  initialPosition.z = Math.max(0, Math.min(3, initialPosition.z));
 
   return Data3d.create({
     x: initialPosition.x,
@@ -115,33 +120,69 @@ function addNoise(coordinates) {
 // }
 // publishUpdates();
 
-app.get("/positions", (req, res) => {
-  function publishUpdates() {
-    setInterval(() => {
-      for (let i = 1; i <= 10; i++) {
-        const timestamp = new Date();
-        const timestamp_usec = timestamp.getTime() * 1000;
-        const movement = generateMovement();
-        const positionWithNoise = addNoise(movement);
+function publishUpdates() {
+  setInterval(() => {
+    for (let i = 1; i <= 10; i++) {
+      const timestamp = new Date();
+      const timestamp_usec = timestamp.getTime() * 1000;
+      const movement = generateMovement();
+      const positionWithNoise = addNoise(movement);
 
-        const positionData = {
-          sensorId: i.toString(),
-          timestampUsec: timestamp_usec.toString(),
-          data3d: positionWithNoise,
-        };
+      const positionData = {
+        sensorId: i.toString(),
+        timestampUsec: timestamp_usec.toString(),
+        data3d: positionWithNoise,
+      };
 
-        console.log(positionData);
-        const message = Position.create(positionData);
+      // console.log(positionData);
+      const message = Position.create(positionData);
 
-        const encodeMessage = Position.encode(message).finish();
-        publisher.send(["positions", encodeMessage]);
+      const encodeMessage = Position.encode(message).finish();
+      publisher.send(["", encodeMessage]);
 
-        console.log("Published message:");
-      }
-    }, 1000);
+      console.log("Published message:");
+    }
+  }, 1000);
+}
+publishUpdates();
+
+let lastPosition = [];
+function lastPositionData(positionMessage) {
+  const Id = positionMessage.sensorId;
+  const timestamp = positionMessage.timestampUsec;
+  const data3d = positionMessage.data3d;
+
+  const newPositionData = {
+    sensorId: Id,
+    timestamp: timestamp,
+    data3d: data3d,
+    id: uuidv4(),
+  };
+  lastPosition.push(newPositionData);
+}
+
+subscriber.on("message", (topic, message) => {
+  try {
+    const positionMessage = Position.decode(message);
+
+    // console.log("connected");
+    // console.log(positionMessage);
+    lastPositionData(positionMessage);
+
+    // Queue.enqueue(positionMessage);
+  } catch (error) {
+    console.error("Error decoding message:", error);
   }
-  publishUpdates();
-  res.send({ "updates sent": true });
+});
+
+app.get("/positions", async (req, res) => {
+  if (lastPosition) {
+    console.log(lastPosition);
+    res.status(200).send(lastPosition);
+  } else {
+    // Handle the case where there is no latest position message
+    res.status(404).send("No position data available");
+  }
 });
 
 app.listen(expressPort, () => {
