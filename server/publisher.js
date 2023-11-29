@@ -168,8 +168,6 @@ subscriber.on("message", (topic, message) => {
     // console.log("connected");
     // console.log(positionMessage);
     lastPositionData(positionMessage);
-
-    // Queue.enqueue(positionMessage);
   } catch (error) {
     console.error("Error decoding message:", error);
   }
@@ -177,7 +175,7 @@ subscriber.on("message", (topic, message) => {
 
 app.get("/positions", async (req, res) => {
   if (lastPosition) {
-    console.log(lastPosition);
+    // console.log(lastPosition);
     res.status(200).send(lastPosition);
   } else {
     // Handle the case where there is no latest position message
