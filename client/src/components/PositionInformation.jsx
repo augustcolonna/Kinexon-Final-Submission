@@ -1,10 +1,10 @@
 // import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 function PositionInformation() {
-  // const [positionData, setPositionData] = useState([]);
-  // const firstPosition = positionData.positions[positionNumber];
+  const [position, setPosition] = useState();
+
   // const lastElement = firstPosition[firstPosition.length - 1];
   //fomratting timestamp
   // const timestamp = parseInt(lastElement.timestamp) / 1000;
@@ -21,22 +21,44 @@ function PositionInformation() {
     axios
       .get("http://localhost:3000/positions")
       .then((response) => {
-        // console.log("the response is: ", response);
-        console.log(response.data);
-        // setPositionData(response.data);
+        const groupBySensor = Object.groupBy(
+          response.data,
+          ({ sensorId }) => sensorId
+        );
+
+        setPosition(groupBySensor);
       })
       .catch((error) => {
         console.log(error);
       });
-  });
+  }, [position]);
+
+  console.log(position);
+
+  // console.log(Object.keys(position));
 
   return (
     <div className="single-position">
-      {/* <ul>
-        {positionData.map((position) => {
-          <li>{position}</li>;
-        })}
-      </ul> */}
+      {position &&
+        Object.keys(position).map((sensorId) => (
+          <div key={sensorId}>
+            <h2>Sensor {sensorId}</h2>
+            {position[sensorId].map((item, index) => (
+              <div key={index}>
+                {/* Render your data properties here */}
+                <p>Sensor ID: {item.sensorId}</p>
+                <p>Timestamp: {item.timestamp}</p>
+                <p>Data3d:</p>
+                <ul>
+                  <li>X: {item.data3d.x}</li>
+                  <li>Y: {item.data3d.y}</li>
+                  <li>Z: {item.data3d.z}</li>
+                </ul>
+                <p>ID: {item.id}</p>
+              </div>
+            ))}
+          </div>
+        ))}
     </div>
   );
 }

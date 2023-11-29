@@ -1,24 +1,13 @@
-// import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.scss";
-
-// import publishUpdates from "./utilities/subscriber";
+// import { useEffect, useState } from "react";
+// import axios from "axios";
 
 import PositionInformation from "./components/PositionInformation";
 import WaitingForData from "./components/WaitingForData";
 import PositionHistory from "./components/PositionHistory";
 
 function App() {
-  // const [positions, setPositions] = useState(false);
-
-  // useEffect(() => {
-  //   if (Object.keys(positionData).length > 0) {
-  //     setPositions(true);
-  //   } else {
-  //     setPositions(false);
-  //   }
-  // }, [positions]);
-
   return (
     <div className="main-container">
       <Routes>
@@ -28,7 +17,7 @@ function App() {
           element={
             <div className="position-container">
               <div className="position">
-                <PositionInformation positionNumber={1} />
+                <PositionInformation positionNumber={"1"} />
               </div>
               <div className="position">
                 <PositionInformation positionNumber={2} />
