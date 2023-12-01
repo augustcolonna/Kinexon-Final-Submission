@@ -22,44 +22,47 @@ html,
     justify-content: center;
     align-items: center;
 
-    a {
-      text-decoration: none;
-      color: $white-color;
-      margin-top: 40px;
-
-      button {
-        background-color: #013a6b;
-        background-image: linear-gradient(58deg, #013a6b 50%, #004e95 50%);
-        border: solid 3px $white-color;
-        border-radius: 15px;
-        padding: 10px;
-        color: #e5f4f4;
-        font-size: 1.5rem;
-        font-weight: bold;
-        text-transform: uppercase;
-        letter-spacing: 0.2rem;
-        text-decoration: none;
-        margin: 20px;
-        transition: all 0.2s ease-in-out;
-        height: 90%;
-
-        &:hover {
-          background-color: #004e95;
-          background-image: linear-gradient(58deg, #004e95 50%, #013a6b 50%);
-          color: #eeeded;
-          transform: scale(1.1);
-          animation: pulse-animation 2s infinite;
-          box-shadow: 0px 0px 1px 1px #eeeded;
-          border-radius: 15px;
-          cursor: pointer;
-        }
-      }
-    }
+    height: 100%;
 
     .single-position-container {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      grid-gap: 10px;
+      grid-template-rows: repeat(2, 1fr);
+      grid-gap: 18px;
+
+      a {
+        text-decoration: none;
+        color: $white-color;
+        margin-top: 40px;
+        grid-column-start: 3;
+
+        button {
+          background-color: #013a6b;
+          background-image: linear-gradient(58deg, #013a6b 50%, #004e95 50%);
+          border: solid 3px $white-color;
+          border-radius: 15px;
+          padding: 10px;
+          color: #e5f4f4;
+          font-size: 1.5rem;
+          font-weight: bold;
+          text-transform: uppercase;
+          letter-spacing: 0.2rem;
+          text-decoration: none;
+          margin: 20px;
+          transition: all 0.2s ease-in-out;
+
+          &:hover {
+            background-color: #004e95;
+            background-image: linear-gradient(58deg, #004e95 50%, #013a6b 50%);
+            color: #eeeded;
+            transform: scale(1.1);
+            animation: pulse-animation 2s infinite;
+            box-shadow: 0px 0px 1px 1px #eeeded;
+            border-radius: 15px;
+            cursor: pointer;
+          }
+        }
+      }
 
       .single-position {
         display: flex;
@@ -68,7 +71,7 @@ html,
         align-items: center;
         border: solid 3px $white-color;
         background-color: #013a6b;
-        background-image: linear-gradient(58deg, #013a6b 50%, #004e95 50%);
+        background-image: linear-gradient(61deg, #013a6b 50%, #004e95 50%);
         border-radius: 15px;
         padding: 20px;
         color: #e5f4f4;
@@ -77,6 +80,44 @@ html,
         border-radius: 15px;
         width: 70%;
         justify-self: center;
+        margin: 10px 0 10px 0;
+
+        h2 {
+          font-size: 1.5rem;
+          font-weight: bold;
+          text-transform: uppercase;
+          letter-spacing: 0.2rem;
+          text-decoration: none;
+        }
+
+        .data-container {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          .threeD {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+
+            span {
+              font-size: 2rem;
+              font-weight: bold;
+              letter-spacing: 0.2rem;
+              border-right: #eeeded 1px solid;
+              margin-right: 10px;
+              padding-right: 10px;
+            }
+          }
+
+          .timestamp {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            letter-spacing: 0.2rem;
+          }
+        }
       }
     }
   }
@@ -125,9 +166,7 @@ html,
         background-image: linear-gradient(58deg, #004e95 50%, #013a6b 50%);
         color: #eeeded;
         transform: scale(1.1);
-        animation: pulse-animation 2s infinite;
-        box-shadow: 0px 0px 1px 1px #eeeded;
-        border-radius: 15px;
+
         cursor: pointer;
       }
     }
@@ -145,6 +184,9 @@ html,
       border: solid 3px $white-color;
       border-radius: 15px;
       padding: 10px;
+      animation: pulse-animation 2s infinite;
+      box-shadow: 0px 0px 1px 1px #eeeded;
+      border-radius: 15px;
     }
   }
 

@@ -1,6 +1,7 @@
 // import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Button from "./Button";
 // import { Link } from "react-router-dom";
 
 function PositionInformation() {
@@ -22,6 +23,7 @@ function PositionInformation() {
           console.log(error);
         });
     }, 1000);
+    setTimeout(() => {}, 10000);
   });
 
   // const specificPosition = Object.entries(position)[positionNumber];
@@ -33,19 +35,29 @@ function PositionInformation() {
       {position &&
         Object.entries(position).map(([key, value]) => (
           <div className="single-position" key={key}>
-            <h2>Sensor Id {key}</h2>
-            <div>
-              <p>
+            <h2>Sensor {key}</h2>
+            <div className="data-container">
+              <p className="threeD">
+                <span>X</span>
+                {value[value.length - 1].data3d.x.toFixed(2)}
+              </p>
+              <p className="threeD">
+                <span>Y</span>
+                {value[value.length - 1].data3d.y.toFixed(2)}
+              </p>
+              <p className="threeD">
+                <span>Z</span>
+                {value[value.length - 1].data3d.z.toFixed(2)}
+              </p>
+              <p className="timestamp">
                 {new Date(
                   parseInt(value[value.length - 1].timestamp) / 1000
-                ).toString()}
+                ).toLocaleString()}
               </p>
-              <p>{value[value.length - 1].data3d.x.toFixed(2)}</p>
-              <p>{value[value.length - 1].data3d.y.toFixed(2)}</p>
-              <p>{value[value.length - 1].data3d.z.toFixed(2)}</p>
             </div>
           </div>
         ))}
+      <Button position={position} />
     </div>
   );
 }

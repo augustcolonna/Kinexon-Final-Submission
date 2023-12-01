@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
 
-function Button() {
+function Button({ position }) {
   return (
     <Link to="/">
-      <button className="btn">Stop Simulation</button>
+      {position ? (
+        <button className="btn">Stop Simulation</button>
+      ) : (
+        <button className="btn">waiting for positions...</button>
+      )}
     </Link>
   );
 }

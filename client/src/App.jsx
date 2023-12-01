@@ -6,7 +6,6 @@ import "./App.scss";
 import PositionInformation from "./components/PositionInformation";
 import WaitingForData from "./components/WaitingForData";
 // import PositionHistory from "./components/PositionHistory";
-import Button from "./components/Button";
 
 function App() {
   return (
@@ -18,7 +17,6 @@ function App() {
           element={
             <div className="position">
               <PositionInformation />
-              <Button />
             </div>
           }
         />
