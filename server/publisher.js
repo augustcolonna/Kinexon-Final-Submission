@@ -34,49 +34,53 @@ subscriber.subscribe("");
 
 // Function to generate a random position, used for initial position
 function generatePosition() {
-  return Data3d.create({
-    x: Math.abs(Math.floor(Math.random() * 100)),
-    y: Math.abs(Math.floor(Math.random() * 100)),
-    z: Math.floor(Math.random() * 4),
-  });
+  for (let i = 0; i < 10; i++) {
+    return Data3d.create({
+      x: Math.abs(Math.floor(Math.random() * 100)),
+      y: Math.abs(Math.floor(Math.random() * 100)),
+      z: Math.floor(Math.random() * 4),
+    });
+  }
 }
 //create players initial position on the court
 const initialPosition = generatePosition();
 //generate random movement off of initial position coordinates
 function generateMovement() {
-  let playerMovement = Math.floor(Math.random() * 11);
-  let playerMovementZ = Math.floor(Math.random() * 4);
-  // Update x coordinate
-  if (initialPosition.x === 0) {
-    initialPosition.x += playerMovement;
-  } else if (initialPosition.x === 100 || initialPosition.y > 100) {
-    initialPosition.x -= playerMovement;
-  } else {
-    initialPosition.x += Math.floor(Math.random() * 11) - 5;
-  }
+  for (let i = 0; i < 10; i++) {
+    let playerMovement = Math.floor(Math.random() * 11);
+    let playerMovementZ = Math.floor(Math.random() * 4);
+    // Update x coordinate
+    if (initialPosition.x === 0) {
+      initialPosition.x += playerMovement;
+    } else if (initialPosition.x === 100 || initialPosition.y > 100) {
+      initialPosition.x -= playerMovement;
+    } else {
+      initialPosition.x += Math.floor(Math.random() * 11) - 5;
+    }
 
-  // Update y coordinate
-  if (initialPosition.y === 0 || initialPosition.y < 0) {
-    initialPosition.y += playerMovement;
-  } else if (initialPosition.y === 100 || initialPosition.y > 100) {
-    initialPosition.y -= playerMovement;
-  } else {
-    initialPosition.y += Math.floor(Math.random() * 11) - 5;
-  }
+    // Update y coordinate
+    if (initialPosition.y === 0 || initialPosition.y < 0) {
+      initialPosition.y += playerMovement;
+    } else if (initialPosition.y === 100 || initialPosition.y > 100) {
+      initialPosition.y -= playerMovement;
+    } else {
+      initialPosition.y += Math.floor(Math.random() * 11) - 5;
+    }
 
-  //update z coordinate
-  if (initialPosition.z === 0 || initialPosition.z < 0) {
-    initialPosition.z += playerMovementZ;
-  } else if (initialPosition.z === 3 || initialPosition.z > 3) {
-    initialPosition.z -= playerMovementZ;
-  } else {
-    initialPosition.z += playerMovementZ;
-  }
+    //update z coordinate
+    if (initialPosition.z === 0 || initialPosition.z < 0) {
+      initialPosition.z += playerMovementZ;
+    } else if (initialPosition.z === 3 || initialPosition.z > 3) {
+      initialPosition.z -= playerMovementZ;
+    } else {
+      initialPosition.z += playerMovementZ;
+    }
 
-  // check if coordinates are in the court range
-  initialPosition.x = Math.max(0, Math.min(100, initialPosition.x));
-  initialPosition.y = Math.max(0, Math.min(100, initialPosition.y));
-  initialPosition.z = Math.max(0, Math.min(3, initialPosition.z));
+    // check if coordinates are in the court range
+    initialPosition.x = Math.max(0, Math.min(100, initialPosition.x));
+    initialPosition.y = Math.max(0, Math.min(100, initialPosition.y));
+    initialPosition.z = Math.max(0, Math.min(3, initialPosition.z));
+  }
 
   return Data3d.create({
     x: initialPosition.x,
@@ -158,6 +162,7 @@ function lastPositionData(positionMessage) {
     data3d: data3d,
     id: uuidv4(),
   };
+
   lastPosition.push(newPositionData);
 }
 
@@ -167,6 +172,7 @@ subscriber.on("message", (topic, message) => {
 
     // console.log("connected");
     // console.log(positionMessage);
+
     lastPositionData(positionMessage);
   } catch (error) {
     console.error("Error decoding message:", error);
@@ -175,6 +181,7 @@ subscriber.on("message", (topic, message) => {
 
 app.get("/positions", async (req, res) => {
   if (lastPosition) {
+    // console.log(lastPosition);
     // console.log(lastPosition);
     res.status(200).send(lastPosition);
   } else {
