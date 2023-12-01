@@ -1,8 +1,6 @@
-// import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Button from "./Button";
-// import { Link } from "react-router-dom";
 
 function PositionInformation() {
   const [position, setPosition] = useState();
@@ -23,7 +21,6 @@ function PositionInformation() {
           console.log(error);
         });
     }, 1000);
-    setTimeout(() => {}, 10000);
   });
 
   // const specificPosition = Object.entries(position)[positionNumber];
