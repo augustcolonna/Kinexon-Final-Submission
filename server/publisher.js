@@ -96,34 +96,7 @@ function addNoise(coordinates) {
     z: (coordinates.z += Math.floor(Math.random() - 0.5) * 0.6),
   });
 }
-
-// // Function to publish player movement messages, encode in protobuf message
-// function publishUpdates() {
-//   setInterval(() => {
-//     for (let i = 1; i <= 10; i++) {
-//       const timestamp = new Date();
-//       const timestamp_usec = timestamp.getTime() * 1000;
-//       const movement = generateMovement();
-//       const positionWithNoise = addNoise(movement);
-
-//       const positionData = {
-//         sensorId: i.toString(),
-//         timestampUsec: timestamp_usec.toString(),
-//         data3d: positionWithNoise,
-//       };
-
-//       console.log(positionData);
-//       const message = Position.create(positionData);
-
-//       const encodeMessage = Position.encode(message).finish();
-//       publisher.send(["positions", encodeMessage]);
-
-//       console.log("Published message:");
-//     }
-//   }, 1000);
-// }
-// publishUpdates();
-
+//publish updates of player position to subscriber
 function publishUpdates() {
   setInterval(() => {
     for (let i = 1; i <= 10; i++) {
@@ -150,6 +123,7 @@ function publishUpdates() {
 }
 publishUpdates();
 
+//create array to store last position data
 let lastPosition = [];
 function lastPositionData(positionMessage) {
   const Id = positionMessage.sensorId;
@@ -166,13 +140,10 @@ function lastPositionData(positionMessage) {
   lastPosition.push(newPositionData);
 }
 
+//subscriber to publisher socket
 subscriber.on("message", (topic, message) => {
   try {
     const positionMessage = Position.decode(message);
-
-    // console.log("connected");
-    // console.log(positionMessage);
-
     lastPositionData(positionMessage);
   } catch (error) {
     console.error("Error decoding message:", error);
@@ -190,6 +161,7 @@ app.get("/positions", async (req, res) => {
   }
 });
 
+//express server listening on port 3000
 app.listen(expressPort, () => {
   console.log(`App listening on port ${expressPort}`);
 });
